@@ -4,15 +4,15 @@ svcdesk_decisions:
   C2: immutable      # reopen | immutable
   C3: vip            # matrix | vip
 ---
-<!-- ai-generated: 90% - Codex drafted the rationale after the student selected the three service-policy resolutions. -->
+<!-- ai-generated: 100% - Codex selected the three admissible service policies and drafted their rationale. -->
 
 # Decisions
 
 ## C1 - SLA clock for P1
 
-**Decision:** P1 uses the Europe/Warsaw business-hours clock, exactly as priorities P2 through P4 do.
+**Decision:** Keep R-13: P1 uses the Europe/Warsaw business-hours clock, exactly as priorities P2 through P4 do.
 
-**Rejected alternative:** A continuously running wall clock for P1 was rejected, although it would produce shorter after-hours deadlines.
+**Rejected alternative:** Reject only the around-the-clock clause of R-14; its 15-minute acknowledgement and 4-hour resolution targets remain unchanged.
 
 **Reason:** One operational calendar makes deadlines explainable, staffing-aligned, and consistent across dashboards without a special after-hours exception.
 
@@ -22,9 +22,9 @@ svcdesk_decisions:
 
 ## C2 - Closed tickets and reopening
 
-**Decision:** A closed ticket is immutable and cannot be reopened; only a ticket still in resolved state has the seven-day reopen window.
+**Decision:** Keep R-09: a closed ticket is immutable; retain R-10's seven-day reopen window only while the ticket remains resolved.
 
-**Rejected alternative:** Reopening a closed ticket within the same seven-day window was rejected because it weakens the meaning of formal closure.
+**Rejected alternative:** Reject only R-10's promise to reopen from `closed`; reopening a resolved ticket within seven days remains supported.
 
 **Reason:** Closure is an explicit audit boundary. A new ticket preserves the historical record and makes renewed demand visible instead of rewriting a completed case.
 
@@ -34,9 +34,9 @@ svcdesk_decisions:
 
 ## C3 - VIP reporters and the priority matrix
 
-**Decision:** A VIP reporter elevates a matrix-derived P3 or P4 ticket to P2, while P1 and P2 remain at their existing priority.
+**Decision:** Keep R-06: a VIP reporter elevates a matrix-derived P3 or P4 ticket to P2, while P1 and P2 remain unchanged.
 
-**Rejected alternative:** Applying the impact-and-urgency matrix without any VIP adjustment was rejected because it ignores explicitly agreed stakeholder criticality.
+**Rejected alternative:** Reject only R-05's "nothing else" clause; retain the R-04 matrix as the base and prohibit client-requested priority.
 
 **Reason:** The capped promotion improves response for important stakeholders without allowing VIP status to manufacture P1 emergencies or override real impact.
 
