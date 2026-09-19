@@ -1,57 +1,45 @@
 ---
 svcdesk_decisions:
-  C1: wallclock      # wallclock | business
+  C1: business       # wallclock | business
   C2: immutable      # reopen | immutable
   C3: vip            # matrix | vip
 ---
-<!-- ai-generated: ??% - TODO: replace ?? with your estimate and say how AI was used (the advisory flags this line until you do) -->
+<!-- ai-generated: 90% - Codex drafted the rationale after the student selected the three service-policy resolutions. -->
 
 # Decisions
 
-<!--
-How to fill this in (delete this comment when you are done):
-- The three values in the front matter must be the ones your RUNNING service exhibits. The checker probes the
-  service (checks 2.41, 2.35, 2.46) and compares them with this file (L1-CORE-4).
-- Keep the three headings starting with "## C1", "## C2", "## C3" and the five bold labels in each section. Write
-  at least 20 characters after every label; the lecturer reads this document, so write what you would say to
-  the service owner, not the minimum.
-- "Service owner": the role (never a person's name) who would sign this decision off, and why it is theirs.
-- "Customer outcome": what the reporter or the organisation gets from this choice, in one or two sentences.
-- Update the ai-generated line above to say how much of this text an AI wrote and how.
--->
-
 ## C1 - SLA clock for P1
 
-**Decision:** TODO
+**Decision:** P1 uses the Europe/Warsaw business-hours clock, exactly as priorities P2 through P4 do.
 
-**Rejected alternative:** TODO
+**Rejected alternative:** A continuously running wall clock for P1 was rejected, although it would produce shorter after-hours deadlines.
 
-**Reason:** TODO
+**Reason:** One operational calendar makes deadlines explainable, staffing-aligned, and consistent across dashboards without a special after-hours exception.
 
-**Service owner:** TODO
+**Service owner:** The service-level manager owns this choice because that role defines measurable SLA commitments and ensures support capacity can meet them.
 
-**Customer outcome:** TODO
+**Customer outcome:** Reporters receive predictable deadlines tied to staffed hours rather than promises that may expire while no support team is available.
 
 ## C2 - Closed tickets and reopening
 
-**Decision:** TODO
+**Decision:** A closed ticket is immutable and cannot be reopened; only a ticket still in resolved state has the seven-day reopen window.
 
-**Rejected alternative:** TODO
+**Rejected alternative:** Reopening a closed ticket within the same seven-day window was rejected because it weakens the meaning of formal closure.
 
-**Reason:** TODO
+**Reason:** Closure is an explicit audit boundary. A new ticket preserves the historical record and makes renewed demand visible instead of rewriting a completed case.
 
-**Service owner:** TODO
+**Service owner:** The process owner for incident management signs off because that role governs lifecycle controls, auditability, and reporting integrity.
 
-**Customer outcome:** TODO
+**Customer outcome:** Customers retain a trustworthy history; if work is needed after closure, a fresh ticket makes ownership and SLA timing unambiguous.
 
 ## C3 - VIP reporters and the priority matrix
 
-**Decision:** TODO
+**Decision:** A VIP reporter elevates a matrix-derived P3 or P4 ticket to P2, while P1 and P2 remain at their existing priority.
 
-**Rejected alternative:** TODO
+**Rejected alternative:** Applying the impact-and-urgency matrix without any VIP adjustment was rejected because it ignores explicitly agreed stakeholder criticality.
 
-**Reason:** TODO
+**Reason:** The capped promotion improves response for important stakeholders without allowing VIP status to manufacture P1 emergencies or override real impact.
 
-**Service owner:** TODO
+**Service owner:** The service owner approves this policy because that role balances business relationship commitments against operational capacity and fairness.
 
-**Customer outcome:** TODO
+**Customer outcome:** VIP reporters receive faster handling for otherwise low-priority issues, while genuine high-impact incidents still keep the highest precedence.
