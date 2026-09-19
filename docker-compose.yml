@@ -2,9 +2,14 @@
 # The checker enforces: a service named exactly "svcdesk", port 8080 inside the container,
 # SVCDESK_TEST_CLOCK set, no host-path bind mounts on any service, and images that need
 # no network once built (dependencies are installed at build time, never at start).
+name: lab1-svcdesk
+
 services:
   svcdesk:
     build: .
+    # Keep the image identity stable when the grader builds and runs in separate stages.
+    image: lab1-svcdesk:local
+    pull_policy: never
     ports:
       - "8080:8080"               # recommended for local work; the checker removes it in container mode
     environment:
@@ -29,6 +34,9 @@ services:
   # Like svcdesk, the tests image is built before the grader blocks egress: install everything at build time.
   tests:
     build: .
+    # Stage 1 builds this image before the grading sandbox disables egress.
+    image: lab1-svcdesk-tests:local
+    pull_policy: never
     profiles: ["tests"]
     working_dir: /app/src
     depends_on:
