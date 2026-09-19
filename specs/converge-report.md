@@ -20,3 +20,9 @@ The conflict is between the "nothing else" clause of **R-05** and the VIP floor 
 The remaining requirements are compatible with all three resolutions: **R-08** centralizes transition conflicts, **R-16** defines breach and pause, **R-20** makes invalid input deterministic, **R-21** makes every time-dependent check repeatable, and **R-22** plus **R-24** keep deployment reproducible without runtime network access or host bind mounts.
 
 The converged contract is implementable as a single deterministic service: request validation precedes mutation, priority is computed once on creation, SLA deadlines are stored as instants, and lifecycle actions update only their own timestamps.
+
+## Implementation evidence
+
+The completed service follows the converged specification rather than merely the minimum published examples. `src/svcdesk/models.py` enforces **R-03** and **R-20** while ignoring server-owned input. `src/svcdesk/clock.py` implements **R-12**, **R-13**, **R-14**, **R-17**, and the DST-sensitive T1-T8 vectors. `src/svcdesk/main.py` implements the C2 lifecycle boundary from **R-09** through **R-11**, the C3 priority rule from **R-04** through **R-06**, and the per-request clock in **R-21**. SQLite and the named Compose volume cover **R-23**.
+
+The repository's profile-gated suite finishes with 15 passing HTTP tests. The official Tier A checker exits 0: all locally decidable Core specifications pass, all three Stretch specifications pass, observations are C1=`business`, C2=`immutable`, C3=`vip`, and the AI-disclosure advisory reports every checked file covered. L1-CORE-5 remains the expected local skip and is supported by accepted specs receipt issue 9.
