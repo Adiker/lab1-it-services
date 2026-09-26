@@ -7,12 +7,12 @@ from datetime import datetime, timedelta
 from typing import Annotated, Any
 from uuid import uuid4
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Query
+from fastapi import Body, Depends, FastAPI, Header, HTTPException, Query
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from . import store
+from . import dora, store
 from .clock import due_instants, is_business_time, parse_instant, real_now, utc_text
 from .models import TicketCreate
 
@@ -86,6 +86,33 @@ def require_ticket(ticket_id: str) -> dict[str, Any]:
 @app.get("/health")
 def health(_: Now) -> dict[str, str]:
     return {"status": "ok", "service": "svcdesk"}
+
+
+@app.post("/dora/metrics")
+def dora_metrics(body: Annotated[Any, Body()]) -> dict[str, Any]:
+    try:
+        return dora.calculate(body)
+    except ValueError as exc:
+        fail(422, "invalid_event_log", str(exc))
+    raise AssertionError("unreachable")
+
+
+@app.get("/dora/ticket-events")
+def ticket_events() -> list[dict[str, str]]:
+    phases = (
+        ("created", "created_at", "new"),
+        ("acknowledged", "acknowledged_at", "acknowledged"),
+        ("resolved", "resolved_at", "resolved"),
+        ("closed", "closed_at", "closed"),
+    )
+    events = [
+        {"ticket_id": ticket["id"], "at": ticket[field], "phase": phase,
+         "priority": ticket["priority"], "state": state}
+        for ticket in store.list_all()
+        for phase, field, state in phases
+        if ticket[field] is not None
+    ]
+    return sorted(events, key=lambda event: (parse_instant(event["at"]), event["ticket_id"], event["phase"]))
 
 
 @app.post("/tickets", status_code=201)

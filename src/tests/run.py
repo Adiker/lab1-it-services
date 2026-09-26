@@ -8,6 +8,7 @@ import time
 import urllib.error
 import urllib.request
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 
@@ -177,6 +178,96 @@ def main() -> int:
     def _():
         status, _data = request("POST", "/tickets", "yesterday", payload())
         assert status in {400, 422}
+
+    window = {"from": "2026-09-01T00:00:00Z", "to": "2026-09-22T00:00:00Z"}
+    practice_events = [json.loads(line) for line in Path("/app/fixtures/events-practice.jsonl").read_text().splitlines() if line]
+    practice_expected = json.loads(Path("/app/fixtures/metrics-practice.json").read_text())
+
+    @check("DORA practice answer exactly matches published values")
+    def _():
+        status, data = request("POST", "/dora/metrics", body={"window": window, "events": practice_events})
+        assert status == 200 and data == practice_expected, (status, data)
+
+    @check("DORA ordering and exact duplicates")
+    def _():
+        status, data = request("POST", "/dora/metrics", body={"window": window, "events": list(reversed(practice_events * 2))})
+        assert status == 200 and data == practice_expected, (status, data)
+
+    @check("DORA empty log has null ratios and medians")
+    def _():
+        status, data = request("POST", "/dora/metrics", body={"window": window, "events": []})
+        assert status == 200 and data["deployment_frequency_per_day"] == 0
+        assert all(data[key] is None for key in ("change_lead_time_seconds_p50", "failed_deployment_recovery_time_seconds_p50", "change_fail_rate", "deployment_rework_rate"))
+        assert all(value == 0 for value in data["counts"].values())
+
+    @check("DORA rejects malformed references")
+    def _():
+        malformed = [{"event_id": "bad-commit", "type": "commit", "at": "2026-09-01T01:00:00Z", "sha": "bad", "branch": "main", "change_id": None, "reverts": "missing"}]
+        status, data = request("POST", "/dora/metrics", body={"window": window, "events": malformed})
+        assert status in {400, 422} and isinstance(data.get("error"), dict)
+
+    @check("DORA rejects reversed window")
+    def _():
+        status, data = request("POST", "/dora/metrics", body={"window": {"from": window["to"], "to": window["from"]}, "events": []})
+        assert status in {400, 422} and isinstance(data.get("error"), dict)
+
+    @check("DORA synthetic revert, clock skew, recovery and ground truth")
+    def _():
+        synthetic = [
+            {"event_id": "c1", "type": "commit", "at": "2026-09-01T01:00:00Z", "sha": "a", "branch": "main", "change_id": "CH-A", "reverts": None},
+            {"event_id": "c2", "type": "commit", "at": "2026-09-01T04:00:00Z", "sha": "b", "branch": "hotfix", "change_id": None, "reverts": "a"},
+            {"event_id": "c3", "type": "commit", "at": "2026-09-01T06:00:00Z", "sha": "c", "branch": "main", "change_id": None, "reverts": "b"},
+            {"event_id": "d1", "type": "deployment", "at": "2026-09-01T03:00:00Z", "deployment_id": "D1", "environment": "production", "outcome": "success", "commits": ["a", "b"], "unplanned": False, "caused_by": None},
+            {"event_id": "d2", "type": "deployment", "at": "2026-09-01T05:00:00Z", "deployment_id": "D2", "environment": "production", "outcome": "success", "commits": ["b", "c"], "unplanned": False, "caused_by": None},
+            {"event_id": "d3", "type": "deployment", "at": "2026-09-01T07:00:00Z", "deployment_id": "D3", "environment": "production", "outcome": "failure", "commits": [], "unplanned": True, "caused_by": "I1"},
+            {"event_id": "i1-open", "type": "incident", "at": "2026-09-01T07:05:00Z", "incident_id": "I1", "phase": "opened", "deployments": ["D3"]},
+            {"event_id": "i1-resolved", "type": "incident", "at": "2026-09-02T01:00:00Z", "incident_id": "I1", "phase": "resolved", "deployments": ["D3"]},
+        ]
+        status, data = request("POST", "/dora/metrics", body={"window": {"from": "2026-09-01T00:00:00Z", "to": "2026-09-02T00:00:00Z"}, "events": synthetic})
+        assert status == 200, (status, data)
+        assert data["deployment_frequency_per_day"] == 3
+        assert data["change_lead_time_seconds_p50"] == 0
+        assert data["failed_deployment_recovery_time_seconds_p50"] == 64800
+        assert data["change_fail_rate"] == data["deployment_rework_rate"] == 0.333333
+        assert data["counts"]["lead_time_pairs"] == 3 and data["counts"]["changes"] == 1
+        assert data["anomalies"]["negative_lead_time_pairs"] == 2
+        assert data["anomalies"]["revert_chains_collapsed"] == 2
+        assert data["anomalies"]["commits_never_on_main"] == 1
+        assert data["ground_truth"] == {"changes_delivered": 1, "true_change_lead_time_seconds_p50": 7200}
+
+    @check("DORA selects earliest covering incident even when unresolved")
+    def _():
+        failed = {"event_id": "failure", "type": "deployment", "at": "2026-09-01T09:00:00Z", "deployment_id": "D", "environment": "production", "outcome": "failure", "commits": [], "unplanned": False, "caused_by": None}
+        events = [
+            failed,
+            {"event_id": "open-early", "type": "incident", "at": "2026-09-01T09:05:00Z", "incident_id": "EARLY", "phase": "opened", "deployments": ["D"]},
+            {"event_id": "open-late", "type": "incident", "at": "2026-09-01T09:10:00Z", "incident_id": "LATE", "phase": "opened", "deployments": ["D"]},
+            {"event_id": "resolve-late", "type": "incident", "at": "2026-09-01T10:00:00Z", "incident_id": "LATE", "phase": "resolved", "deployments": ["D"]},
+        ]
+        status, data = request("POST", "/dora/metrics", body={"window": window, "events": events})
+        assert status == 200 and data["failed_deployment_recovery_time_seconds_p50"] is None
+        assert data["counts"]["open_failures"] == 1 and data["counts"]["recovered_failures"] == 0
+        assert data["anomalies"]["overlapping_incident_pairs"] == 1
+
+    @check("DORA offset window denotes the same UTC instants")
+    def _():
+        shifted = {"from": "2026-09-01T02:00:00+02:00", "to": "2026-09-22T02:00:00+02:00"}
+        status, data = request("POST", "/dora/metrics", body={"window": shifted, "events": practice_events})
+        assert status == 200 and data["window"] == shifted
+        assert {key: value for key, value in data.items() if key != "window"} == {key: value for key, value in practice_expected.items() if key != "window"}
+
+    @check("ticket event stream follows lifecycle and sort order")
+    def _():
+        ticket = create(title="stream test")
+        request("POST", f"/tickets/{ticket['id']}/ack", T1_5)
+        request("POST", f"/tickets/{ticket['id']}/start", T1_10)
+        request("POST", f"/tickets/{ticket['id']}/resolve", T1_1H)
+        status, events = request("GET", "/dora/ticket-events")
+        assert status == 200 and isinstance(events, list)
+        own = [event for event in events if event["ticket_id"] == ticket["id"]]
+        assert [(event["phase"], event["state"]) for event in own] == [("created", "new"), ("acknowledged", "acknowledged"), ("resolved", "resolved")]
+        assert all(event["priority"] == ticket["priority"] for event in own)
+        assert [(event["at"], event["ticket_id"]) for event in events] == sorted((event["at"], event["ticket_id"]) for event in events)
 
     passed = 0
     failures: list[str] = []

@@ -1,0 +1,11 @@
+{
+  "source": "gh api 'repos/swasik/itsm-2026-submissions/issues?state=all&per_page=100' --paginate --jq '.[] | select(any(.labels[]; .name == \"receipted\") and any(.labels[]; .name == \"kind:submission\")) | {number, attempt: (try (.title | capture(\"lab[0-9]+/v(?<attempt>[0-9]+)\").attempt | tonumber) catch null)}'",
+  "captured_at": "2026-09-26T12:07:48Z",
+  "capture_path": "evidence/rework-class-issues.jsonl",
+  "sha256": "160e9dc2baddef784fcda34e548a821e2f458a919e503702f8fc19ebfb85a672",
+  "deployments": 45,
+  "rework_deployments": 13,
+  "deployment_rework_rate": 0.288889,
+  "method": "Each receipted class submission is one delivery observation; a corrected tag version v2 or later is counted as rework.",
+  "limitation": "The shared receipt history does not expose the R-15 unplanned and caused_by fields, so corrected submissions are an explicit proxy for deployment rework."
+}
