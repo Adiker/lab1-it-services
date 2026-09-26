@@ -11,6 +11,8 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from .dora_regressions import checks as dora_regression_checks
+
 
 BASE = os.environ.get("SVCDESK_URL", "http://svcdesk:8080").rstrip("/")
 T1 = "2026-10-14T10:00:00Z"
@@ -268,6 +270,8 @@ def main() -> int:
         assert [(event["phase"], event["state"]) for event in own] == [("created", "new"), ("acknowledged", "acknowledged"), ("resolved", "resolved")]
         assert all(event["priority"] == ticket["priority"] for event in own)
         assert [(event["at"], event["ticket_id"]) for event in events] == sorted((event["at"], event["ticket_id"]) for event in events)
+
+    checks.extend(dora_regression_checks(request))
 
     passed = 0
     failures: list[str] = []
