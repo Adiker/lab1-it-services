@@ -67,3 +67,8 @@ T8 crosses the weekend in which Warsaw leaves daylight-saving time; business hou
 ## Own-test contract
 
 The optional Compose `tests` service is enabled only by `profiles: ["tests"]`, reads the service address from `SVCDESK_URL` (default `http://svcdesk:8080`), depends on a healthy service, and exercises at least ten deterministic cases. Its final stdout line is exactly `ITSMLAB-TESTS: passed=<n> failed=0`. The test image is built before egress is blocked and contacts no host other than `SVCDESK_URL` at runtime.
+
+
+## Laboratory 3 monitoring extension
+
+`GET /kb/search?q=<1..200 characters>` forwards one URL-encoded query to `KB_INDEX_URL/search`, waits for it, returns its hits unchanged on success and maps upstream failures to 502 `upstream_unavailable`. Invalid queries return 422 with an error object. `GET /metrics` exposes the request-duration histogram in Prometheus text format. The full published extension contract is in [MONITORING.md](MONITORING.md); it leaves the ticket and DORA endpoints intact.

@@ -6,3 +6,6 @@ __pycache__
 *.pyc
 report.json
 tmp
+.venv
+genai
+gap

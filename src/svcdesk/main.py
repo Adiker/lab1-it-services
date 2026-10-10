@@ -7,12 +7,16 @@ from datetime import datetime, timedelta
 from typing import Annotated, Any
 from uuid import uuid4
 
+import httpx
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+
 from fastapi import Body, Depends, FastAPI, Header, HTTPException, Query
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from . import dora, store
+from .monitoring import REGISTRY, RequestMetrics
 from .clock import due_instants, is_business_time, parse_instant, real_now, utc_text
 from .models import TicketCreate
 
@@ -27,10 +31,13 @@ MATRIX = {
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     store.initialize()
-    yield
+    async with httpx.AsyncClient(timeout=3.0, transport=httpx.AsyncHTTPTransport(retries=0)) as client:
+        app.state.kb_client = client
+        yield
 
 
 app = FastAPI(title="svcdesk", lifespan=lifespan)
+app.add_middleware(RequestMetrics)
 
 
 def error_payload(code: str, message: str) -> dict[str, dict[str, str]]:
@@ -204,4 +211,22 @@ def act_on_ticket(ticket_id: str, action: str, now: Now) -> dict[str, Any]:
     if action == "reopen" and state == "closed":
         fail(409, "ticket_closed", "closed tickets are immutable")
     fail(409, "invalid_transition", f"cannot {action} a ticket in state {state}")
+    raise AssertionError("unreachable")
+
+
+@app.get("/metrics", include_in_schema=False)
+async def metrics() -> Response:
+    return Response(generate_latest(REGISTRY), headers={"Content-Type": CONTENT_TYPE_LATEST})
+
+
+@app.get("/kb/search")
+async def kb_search(q: Annotated[str, Query(min_length=1, max_length=200)]) -> dict[str, Any]:
+    upstream = os.environ.get("KB_INDEX_URL", "http://kb-index:8080").rstrip("/")
+    try:
+        response = await app.state.kb_client.get(f"{upstream}/search", params={"q": q})
+        if response.status_code != 200:
+            fail(502, "upstream_unavailable", "Knowledge-base index is unavailable")
+        return {"query": q, "hits": response.json()["hits"]}
+    except (httpx.HTTPError, ValueError, KeyError):
+        fail(502, "upstream_unavailable", "Knowledge-base index is unavailable")
     raise AssertionError("unreachable")

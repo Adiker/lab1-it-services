@@ -1,0 +1,23 @@
+login adiker: /kb/search, 60 s open-loop at 40 requests/s (latency-corrected)
+  percentiles   p10 26.9 ms  p25 31.3 ms  p50 36.5 ms  p75 43.4 ms  p90 51.5 ms  p95 57.9 ms  p99 353.4 ms  p99.9 422.2 ms  p99.99 438.4 ms
+  q (p99)       353.4 ms
+  q_kb          339.2 ms  (kb-index measured directly)
+  status codes  {'200': 2396, '502': 3}
+  oha's own latency histogram (upper edge in seconds: count):
+       0.0148  1
+       0.0571  2271
+       0.0995  65
+       0.1418  0
+       0.1842  0
+       0.2266  0
+       0.2689  2
+       0.3113  16
+       0.3537  21
+       0.3960  18
+       0.4384  5
+
+ladders against q:
+  your service's         does NOT resolve q: (0.25, 0.5], width 70.7% of q
+  the flawed ladder      does NOT resolve q: (0.04, 0.5], width 130.2% of q
+
+your histogram's own p99 over the run: 403.3 ms (M-12 wants it within 25 % of q)

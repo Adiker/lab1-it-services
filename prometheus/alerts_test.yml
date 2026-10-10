@@ -1,0 +1,131 @@
+# ai-generated: 100% - Codex wrote synthetic burns with exact onset, reset and threshold assertions.
+rule_files:
+- alerts.yml
+evaluation_interval: 1m
+tests:
+- name: KbSearchErrorsBurnFast delayed burn, exact edges and reset
+  interval: 1m
+  input_series:
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="200"}
+    values: 0+600x70 42427.2+427.2x79 76776+600x14
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="502"}
+    values: 0+0x70 172.8+172.8x79 13824+0x14
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/tickets/{id}", http_response_status_code="200"}
+    values: 0+600x165
+  alert_rule_test:
+  - eval_time: 104m
+    alertname: KbSearchErrorsBurnFast
+    exp_alerts: []
+  - eval_time: 105m
+    alertname: KbSearchErrorsBurnFast
+    exp_alerts: &id001
+    - exp_labels:
+        service: svcdesk
+        slo: availability
+        severity: P1
+      exp_annotations:
+        summary: Knowledge-base search availability budget is burning at 14.4x
+  - eval_time: 150m
+    alertname: KbSearchErrorsBurnFast
+    exp_alerts: *id001
+  - eval_time: 158m
+    alertname: KbSearchErrorsBurnFast
+    exp_alerts: []
+- name: KbSearchErrorsBurnFast sustained 0.8x threshold
+  interval: 1m
+  input_series:
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="200"}
+    values: 0+530.88x80
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="502"}
+    values: 0+69.12x80
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/tickets/{id}", http_response_status_code="200"}
+    values: 0+600x80
+  alert_rule_test:
+  - eval_time: 70m
+    alertname: KbSearchErrorsBurnFast
+    exp_alerts: []
+- name: KbSearchErrorsBurnFast sustained 1.2x threshold
+  interval: 1m
+  input_series:
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="200"}
+    values: 0+496.32x80
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="502"}
+    values: 0+103.68x80
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/tickets/{id}", http_response_status_code="200"}
+    values: 0+600x80
+  alert_rule_test:
+  - eval_time: 70m
+    alertname: KbSearchErrorsBurnFast
+    exp_alerts: *id001
+- name: KbSearchErrorsBurnSlow delayed burn, exact edges and reset
+  interval: 1m
+  input_series:
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="200"}
+    values: 0+600x370 222528+528x379 423240+600x39
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="502"}
+    values: 0+0x370 72+72x379 27360+0x39
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/tickets/{id}", http_response_status_code="200"}
+    values: 0+600x790
+  alert_rule_test:
+  - eval_time: 554m
+    alertname: KbSearchErrorsBurnSlow
+    exp_alerts: []
+  - eval_time: 555m
+    alertname: KbSearchErrorsBurnSlow
+    exp_alerts: &id002
+    - exp_labels:
+        service: svcdesk
+        slo: availability
+        severity: P2
+      exp_annotations:
+        summary: Knowledge-base search availability budget is burning at 6x
+  - eval_time: 750m
+    alertname: KbSearchErrorsBurnSlow
+    exp_alerts: *id002
+  - eval_time: 783m
+    alertname: KbSearchErrorsBurnSlow
+    exp_alerts: []
+- name: KbSearchErrorsBurnSlow sustained 0.8x threshold
+  interval: 1m
+  input_series:
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="200"}
+    values: 0+571.2x380
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="502"}
+    values: 0+28.8x380
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/tickets/{id}", http_response_status_code="200"}
+    values: 0+600x380
+  alert_rule_test:
+  - eval_time: 370m
+    alertname: KbSearchErrorsBurnSlow
+    exp_alerts: []
+- name: KbSearchErrorsBurnSlow sustained 1.2x threshold
+  interval: 1m
+  input_series:
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="200"}
+    values: 0+556.8x380
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/kb/search", http_response_status_code="502"}
+    values: 0+43.2x380
+  - series: http_server_request_duration_seconds_count{job="svcdesk", instance="svcdesk:8080", http_request_method="GET",
+      http_route="/tickets/{id}", http_response_status_code="200"}
+    values: 0+600x380
+  alert_rule_test:
+  - eval_time: 370m
+    alertname: KbSearchErrorsBurnSlow
+    exp_alerts: *id002
