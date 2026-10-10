@@ -1,0 +1,46 @@
+# ai-generated: 100% - Codex configured the pinned kube-prometheus-stack for the isolated lab cluster.
+prometheus:
+  prometheusSpec:
+    retention: 2h
+    scrapeInterval: 5s
+    evaluationInterval: 1m
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 1Gi
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    ruleSelector:
+      matchLabels:
+        app: svcdesk
+    serviceMonitorSelector:
+      matchLabels:
+        app: svcdesk
+defaultRules:
+  create: false
+grafana:
+  enabled: false
+alertmanager:
+  enabled: false
+kubeApiServer:
+  enabled: false
+kubelet:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+nodeExporter:
+  enabled: false

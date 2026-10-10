@@ -37,7 +37,7 @@ docker compose --profile tests run --rm --build tests
 docker compose run --rm --no-deps tests python -m unittest tests.monitoring_regressions
 ```
 
-The two Stretch tracks are actual local GenAI inference (`genai/DIFF.md`, spans and reproduction script) and a client/server gap measured through Toxiproxy (`gap/README.md`, `gap.json` and raw oha result). Kubernetes is not implemented; two of three Stretch tracks are required. To remeasure the gap:
+All three Stretch tracks are included: actual local GenAI inference (`genai/DIFF.md`, spans and reproduction script), a client/server gap measured through Toxiproxy (`gap/README.md`, `gap.json` and raw oha result), and an isolated Kubernetes deployment with kube-prometheus-stack 89.2.2 (`k8s/README.md`). Kubernetes evidence is an actual cluster export, with matching alert groups and a ServiceMonitor that preserves `job="svcdesk"`. To remeasure the gap:
 
 ```sh
 docker compose --profile gap up -d svcdesk kb-index toxiproxy

@@ -1,0 +1,20 @@
+# ai-generated: 100% - Codex connected the svcdesk Service to the Prometheus operator.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: svcdesk
+  namespace: monitoring
+  labels:
+    app: svcdesk
+spec:
+  jobLabel: app
+  namespaceSelector:
+    matchNames:
+      - svcdesk
+  selector:
+    matchLabels:
+      app: svcdesk
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 5s

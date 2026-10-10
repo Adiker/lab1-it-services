@@ -1,0 +1,112 @@
+# ai-generated: 100% - Codex deployed the same svcdesk and seeded index images into an isolated namespace.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: svcdesk
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kb-index
+  namespace: svcdesk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kb-index
+  template:
+    metadata:
+      labels:
+        app: kb-index
+    spec:
+      containers:
+        - name: kb-index
+          image: ghcr.io/swasik/seeded-toxic:2026
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: SEEDED_TOXIC_LOGIN
+              value: adiker
+            - name: SEEDED_TOXIC_ADMIN
+              value: "0"
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kb-index
+  namespace: svcdesk
+spec:
+  selector:
+    app: kb-index
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svcdesk
+  namespace: svcdesk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: svcdesk
+  template:
+    metadata:
+      labels:
+        app: svcdesk
+    spec:
+      containers:
+        - name: svcdesk
+          image: lab1-svcdesk:local
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: KB_INDEX_URL
+              value: http://kb-index.svcdesk.svc:8080
+            - name: SVCDESK_TEST_CLOCK
+              value: "1"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 2
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svcdesk
+  namespace: svcdesk
+  labels:
+    app: svcdesk
+spec:
+  selector:
+    app: svcdesk
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
