@@ -8,7 +8,8 @@ from typing import Annotated, Any
 from uuid import uuid4
 
 import httpx
-from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+from prometheus_client import generate_latest
+from prometheus_client.exposition import CONTENT_TYPE_PLAIN_0_0_4
 
 from fastapi import Body, Depends, FastAPI, Header, HTTPException, Query
 from fastapi.exceptions import RequestValidationError
@@ -216,7 +217,7 @@ def act_on_ticket(ticket_id: str, action: str, now: Now) -> dict[str, Any]:
 
 @app.get("/metrics", include_in_schema=False)
 async def metrics() -> Response:
-    return Response(generate_latest(REGISTRY), headers={"Content-Type": CONTENT_TYPE_LATEST})
+    return Response(generate_latest(REGISTRY), headers={"Content-Type": CONTENT_TYPE_PLAIN_0_0_4})
 
 
 @app.get("/kb/search")

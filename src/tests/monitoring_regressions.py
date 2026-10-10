@@ -77,6 +77,7 @@ class MonitoringRegressionTests(unittest.TestCase):
         after = self.counts()
         response = self.client.get('/metrics', headers={'Accept':'text/plain;version=0.0.4'})
         self.assertTrue(response.headers['content-type'].startswith('text/plain'))
+        self.assertIn('version=0.0.4', response.headers['content-type'])
         self.assertEqual(self.counts(), after)
         self.assertNotIn('random-ticket-123', response.text)
         self.assertNotIn('unknown-123', response.text)
