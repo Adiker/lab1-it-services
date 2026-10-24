@@ -1,4 +1,4 @@
-<!-- ai-generated: 45% - Course introduction retained; Codex documented Lab 3 and local verification. -->
+<!-- ai-generated: 46% - Course introduction retained; Codex documented Labs 3 and 4 and local verification. -->
 # svcdesk - ITSM 2026/27 course repository
 
 This repository was created from the course template. It holds your `svcdesk` service for the whole semester:
@@ -66,3 +66,7 @@ The gap script configures the named proxy, warms up for 5 seconds and measures f
 The workflow `tier-a` runs on every push and on demand (Actions tab, "Run workflow"). It needs no secrets. The
 job is red when a Core spec fails; the step summary shows which checks, and `report.json` is attached as an
 artifact.
+
+## Laboratory 4
+
+The assigned recorded incident, alerting, postmortem, AI scorecards and local verification commands are documented in [LAB4.md](LAB4.md). No submission issue or receipt has been created for this laboratory.

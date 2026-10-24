@@ -1,0 +1,11 @@
+{
+  "source": "Live flagd config-rw volume, read from flagd-ui /app/data/demo.flagd.json",
+  "default_variants": {
+    "paymentFailure": "25%",
+    "loadGeneratorFloodHomepage": "on",
+    "recommendationCacheFailure": "on",
+    "emailMemoryLeak": "off"
+  },
+  "config_sha256": "183ad52e83a4ae812801a9aa35824a0ea0aa4c5ebe4b5f1ece216f783328afb3",
+  "note": "Candidate resource flag and variants are experiment assumptions."
+}

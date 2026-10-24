@@ -1,0 +1,13 @@
+# ai-generated: 100% - Codex recorded a separate kind node with external Linux storage for this experiment.
+# Replace /tmp/lab4-linux-storage with an empty directory on a Linux filesystem with at least 20 GiB free.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+    extraMounts:
+      - hostPath: /tmp/lab4-linux-storage/containerd
+        containerPath: /var/lib/containerd
+      - hostPath: /tmp/lab4-linux-storage/kubelet
+        containerPath: /var/lib/kubelet
+        propagation: Bidirectional

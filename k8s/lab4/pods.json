@@ -1,0 +1,494 @@
+{
+  "source": "kubectl get pods -o json (baseline), kubectl get pods -A -o json (candidate); status projection only, environment omitted",
+  "projected_at": "2026-10-24T15:37:12.791457+00:00",
+  "items": [
+    {
+      "name": "accounting-66484d64d9-twnmr",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "accounting",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "ad-574f55bf9d-ljmqf",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "ad",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "agent-644bcbccb-9qkcq",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "agent",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "astronomy-db-66888d6c94-nmdv8",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "astronomy-db",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "cart-6dcf59db89-p4twd",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "cart",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "chatbot-5b4df75677-d4q88",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "chatbot",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "checkout-68884966fc-75vsh",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "checkout",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "currency-7498f8bc56-jnkct",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "currency",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "email-765655fdfd-hvvpz",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "email",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "flagd-7f46d89fd6-8b79z",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "flagd",
+          "ready": true,
+          "restartCount": 0
+        },
+        {
+          "name": "flagd-ui",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "fraud-detection-5bffb9dd7b-lkkxt",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "fraud-detection",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "frontend-665fcd8896-hkkn7",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "frontend",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "frontend-proxy-69b668c477-z9hv5",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "frontend-proxy",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "grafana-6bc9d574dd-c29fm",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "grafana",
+          "ready": true,
+          "restartCount": 0
+        },
+        {
+          "name": "grafana-sc-alerts",
+          "ready": true,
+          "restartCount": 0
+        },
+        {
+          "name": "grafana-sc-dashboard",
+          "ready": true,
+          "restartCount": 0
+        },
+        {
+          "name": "grafana-sc-datasources",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "image-provider-7c67bc954b-sxgk9",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "image-provider",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "jaeger-79dcd6b75-fq8mw",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "jaeger",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "kafka-5678b59797-kvjd8",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "kafka",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "load-generator-787cd8b76c-wjnnk",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "load-generator",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "mcp-869b4f4bc-tbzqh",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "mcp",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "opamp-server-655d8485c8-5lwvz",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "opamp-server",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "opensearch-0",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "opensearch",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "otel-collector-agent-crf4f",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "opentelemetry-collector",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "payment-5c6cb879c5-b8drt",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "payment",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "product-catalog-6496d6f5c9-97vsj",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "product-catalog",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "prometheus-5b979468d8-xvzvx",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "prometheus-server",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "quote-59db7f4d97-fvq84",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "quote",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "recommendation-854f9cf6d9-cm76h",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "recommendation",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "shipping-6cd458879-7hsh2",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "shipping",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "telemetry-docs-676d69f64-xv76t",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "telemetry-docs",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "valkey-cart-77bd684f89-2dvrg",
+      "namespace": "default",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "valkey-cart",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "coredns-559f6c778d-7nmgm",
+      "namespace": "kube-system",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "coredns",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "coredns-559f6c778d-xsd76",
+      "namespace": "kube-system",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "coredns",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "etcd-lab4-adiker-control-plane",
+      "namespace": "kube-system",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "etcd",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "kindnet-h4b58",
+      "namespace": "kube-system",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "kindnet-cni",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "kube-apiserver-lab4-adiker-control-plane",
+      "namespace": "kube-system",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "kube-apiserver",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "kube-controller-manager-lab4-adiker-control-plane",
+      "namespace": "kube-system",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "kube-controller-manager",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "kube-proxy-fsl55",
+      "namespace": "kube-system",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "kube-proxy",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "kube-scheduler-lab4-adiker-control-plane",
+      "namespace": "kube-system",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "kube-scheduler",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    },
+    {
+      "name": "local-path-provisioner-75f7fc7dc5-9np9n",
+      "namespace": "local-path-storage",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "local-path-provisioner",
+          "ready": true,
+          "restartCount": 0
+        }
+      ]
+    }
+  ]
+}

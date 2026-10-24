@@ -1,0 +1,18 @@
+# ai-generated: 100% - Codex retained chart 0.42.3 defaults with the memory allowances required by the handout.
+components:
+  ad:
+    resources:
+      limits:
+        memory: 512Mi
+  fraud-detection:
+    resources:
+      limits:
+        memory: 512Mi
+grafana:
+  resources:
+    limits:
+      memory: 512Mi
+  sidecar:
+    resources:
+      limits:
+        memory: 512Mi

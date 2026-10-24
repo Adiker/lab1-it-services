@@ -1,0 +1,12 @@
+{
+  "flags_ready_at": "2026-10-24T15:28:37.881717+00:00",
+  "candidate_flags": {
+    "paymentFailure": "25%",
+    "loadGeneratorFloodHomepage": "on",
+    "recommendationCacheFailure": "on"
+  },
+  "minimum_observation_seconds": 300,
+  "note": "Experimental variants and resource hypothesis; not opened sealed fault.",
+  "analysis_at": "2026-10-24T15:35:10.800894+00:00",
+  "observation_seconds": 392.919177
+}

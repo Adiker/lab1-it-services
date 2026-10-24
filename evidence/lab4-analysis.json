@@ -1,0 +1,169 @@
+{
+  "checkout_errors_total": {
+    "expr": "sum(increase(traces_span_metrics_calls_total{service_name=\"checkout\",span_kind=\"SPAN_KIND_SERVER\",status_code=\"STATUS_CODE_ERROR\"}[10m]))",
+    "at": "2026-10-12T06:46:00Z",
+    "result": [
+      {
+        "metric": {},
+        "value": [
+          1791787560,
+          "8.817016666666666"
+        ]
+      }
+    ]
+  },
+  "checkout_error_counter": {
+    "expr": "sum(traces_span_metrics_calls_total{service_name=\"checkout\",span_kind=\"SPAN_KIND_SERVER\",status_code=\"STATUS_CODE_ERROR\"})",
+    "at": "2026-10-12T06:46:00Z",
+    "result": [
+      {
+        "metric": {},
+        "value": [
+          1791787560,
+          "8"
+        ]
+      }
+    ]
+  },
+  "checkout_total_counter": {
+    "expr": "sum(traces_span_metrics_calls_total{service_name=\"checkout\",span_kind=\"SPAN_KIND_SERVER\"})",
+    "at": "2026-10-12T06:46:00Z",
+    "result": [
+      {
+        "metric": {},
+        "value": [
+          1791787560,
+          "137"
+        ]
+      }
+    ]
+  },
+  "baseline_p1": {
+    "expr": "max_over_time(ALERTS{severity=\"P1\",alertstate=\"firing\"}[10m])",
+    "at": "2026-10-12T06:36:22Z",
+    "result": []
+  },
+  "frontend_traffic": {
+    "expr": "sum(rate(traces_span_metrics_calls_total{service_name=\"frontend\",span_kind=\"SPAN_KIND_SERVER\"}[5m]))",
+    "at": "2026-10-12T06:46:00Z",
+    "result": [
+      {
+        "metric": {},
+        "value": [
+          1791787560,
+          "15.154166666666667"
+        ]
+      }
+    ]
+  },
+  "recording": "lab4-rec-4",
+  "login": "adiker",
+  "source_sha256": {
+    "tsdb-snapshot.tar.gz": "e03d69f1ee9d5455ded29f23dc7bd1dc7e7dd0c951c534aadae94e3687732ec1",
+    "ticket.json": "6385622ef8e89a365f2bd27f81b30ad415dea3aadf959f51c0c27a68b25e146b"
+  },
+  "source_verified_unchanged": true,
+  "recording_source": "Laboratory 4 recordings-20261024/lab4-rec-4",
+  "ai-rca-eval.json": {
+    "H1": {
+      "at": "2026-10-12T06:41:00Z",
+      "incident": [
+        {
+          "metric": {},
+          "value": [
+            1791787260,
+            "0.029687907407407406"
+          ]
+        }
+      ],
+      "baseline_at": "2026-10-12T06:31:23+00:00",
+      "baseline": []
+    },
+    "H2": {
+      "at": "2026-10-12T06:41:00Z",
+      "incident": [
+        {
+          "metric": {},
+          "value": [
+            1791787260,
+            "0.029687907407407406"
+          ]
+        }
+      ],
+      "baseline_at": "2026-10-12T06:31:23+00:00",
+      "baseline": []
+    },
+    "H3": {
+      "at": "2026-10-12T06:41:00Z",
+      "incident": [
+        {
+          "metric": {},
+          "value": [
+            1791787260,
+            "0.029687907407407406"
+          ]
+        }
+      ],
+      "baseline_at": "2026-10-12T06:31:23+00:00",
+      "baseline": []
+    },
+    "H4": {
+      "at": "2026-10-12T06:41:00Z",
+      "incident": [
+        {
+          "metric": {},
+          "value": [
+            1791787260,
+            "0.029687907407407406"
+          ]
+        }
+      ],
+      "baseline_at": "2026-10-12T06:31:23+00:00",
+      "baseline": []
+    }
+  },
+  "ai-rca-eval-2.json": {
+    "H1": {
+      "at": "2026-10-12T06:41:00Z",
+      "incident": [
+        {
+          "metric": {},
+          "value": [
+            1791787260,
+            "0.26267546890153554"
+          ]
+        }
+      ],
+      "baseline_at": "2026-10-12T06:31:23+00:00",
+      "baseline": []
+    },
+    "H2": {
+      "at": "2026-10-12T06:41:00Z",
+      "incident": [
+        {
+          "metric": {},
+          "value": [
+            1791787260,
+            "0.26267546890153554"
+          ]
+        }
+      ],
+      "baseline_at": "2026-10-12T06:31:23+00:00",
+      "baseline": []
+    },
+    "H3": {
+      "at": "2026-10-12T06:41:00Z",
+      "incident": [
+        {
+          "metric": {},
+          "value": [
+            1791787260,
+            "58.109746513888894"
+          ]
+        }
+      ],
+      "baseline_at": "2026-10-12T06:31:23+00:00",
+      "baseline": []
+    }
+  }
+}

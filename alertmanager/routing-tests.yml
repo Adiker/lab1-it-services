@@ -1,0 +1,24 @@
+# ai-generated: 100% - Codex wrote exact receiver cases and the equal-label counterexample.
+routes:
+  - labels: {alertname: CheckoutErrorRate, service: checkout, severity: P1, system: shop}
+    receivers: [pager]
+  - labels: {alertname: CheckoutLatency, service: checkout, severity: P1, system: shop}
+    receivers: [pager]
+  - labels: {alertname: ShopServiceErrors, service: shop, severity: P2, system: shop}
+    receivers: [chat]
+  - labels: {alertname: ItsmRouteCheck, service: frontend, severity: P3}
+    receivers: [chat]
+  - labels: {alertname: KbSearchErrorsBurnFast, service: svcdesk, slo: availability, severity: P1}
+    receivers: [pager]
+  - labels: {alertname: KbSearchErrorsBurnSlow, service: svcdesk, slo: availability, severity: P2}
+    receivers: [chat]
+inhibitions:
+  - source: {alertname: CheckoutErrorRate, service: checkout, severity: P1, system: shop}
+    target: {alertname: ShopServiceErrors, service: shop, severity: P2, system: shop}
+    inhibited: true
+  - source: {alertname: CheckoutErrorRate, service: checkout, severity: P1, system: shop}
+    target: {alertname: ShopServiceErrors, service: shop, severity: P2, system: other}
+    inhibited: false
+  - source: {alertname: CheckoutErrorRate, service: checkout, severity: P1, system: shop}
+    target: {alertname: KbSearchErrorsBurnSlow, service: svcdesk, severity: P2, system: svcdesk}
+    inhibited: false

@@ -1,0 +1,50 @@
+{
+  "investigator": {
+    "agent": "course agent loop agent.py (recorded investigator)",
+    "model": "qwen3:4b-instruct",
+    "mcp_server": "prom_mcp.py (course recorded transcript)",
+    "transcript": "ai-rca/transcript.md"
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "hypothesis": "The payment service's internal \"charge\" span is failing, as evidenced by the presence of error counts in the raw data for `traces_span_metrics_calls_total{service_name=\"payment\", span_name=\"charge\", status_code=\"STATUS_CODE_ERROR\"}`.",
+      "component": "payment",
+      "predicts": "sum(rate(traces_span_metrics_calls_total{service_name=\"payment\",span_name=\"charge\",span_kind=\"SPAN_KIND_INTERNAL\",status_code=\"STATUS_CODE_ERROR\"}[5m])) > 0.01",
+      "at": "2026-10-12T06:41:00Z",
+      "result": true,
+      "verdict": "correct",
+      "evidence": "[{'metric': {}, 'value': [1791787260, '0.029687907407407406']}]; baseline 2026-10-12T06:31:23Z: empty. The prediction tests the stated error symptom. Causal direction is inferred from the dependency. The final checkout claim uses an abbreviated span name: the actual discovered client span is oteldemo.PaymentService/Charge, used in the prediction. This does not make the model's literal selector valid."
+    },
+    {
+      "id": "H2",
+      "hypothesis": "The payment service's \"charge\" span shows increasing error counts over time, indicating a failure in the core transaction processing logic, as shown in `traces_span_metrics_calls_total{service_name=\"payment\", span_name=\"charge\", status_code=\"STATUS_CODE_ERROR\"}`.",
+      "component": "payment",
+      "predicts": "sum(rate(traces_span_metrics_calls_total{service_name=\"payment\",span_name=\"charge\",span_kind=\"SPAN_KIND_INTERNAL\",status_code=\"STATUS_CODE_ERROR\"}[5m])) > 0.01",
+      "at": "2026-10-12T06:41:00Z",
+      "result": true,
+      "verdict": "correct",
+      "evidence": "[{'metric': {}, 'value': [1791787260, '0.029687907407407406']}]; baseline 2026-10-12T06:31:23Z: empty. The prediction tests the stated error symptom. Causal direction is inferred from the dependency. The final checkout claim uses an abbreviated span name: the actual discovered client span is oteldemo.PaymentService/Charge, used in the prediction. This does not make the model's literal selector valid."
+    },
+    {
+      "id": "H3",
+      "hypothesis": "The internal \"charge\" span within the payment service is failing, which likely causes downstream failures in the checkout service, as indicated by the correlation between `traces_span_metrics_calls_total{service_name=\"payment\", span_name=\"charge\", status_code=\"STATUS_CODE_ERROR\"}` and the error pattern observed in checkout's \"PaymentService/Charge\" span.",
+      "component": "payment",
+      "predicts": "(sum(rate(traces_span_metrics_calls_total{service_name=\"payment\",span_name=\"charge\",span_kind=\"SPAN_KIND_INTERNAL\",status_code=\"STATUS_CODE_ERROR\"}[5m])) > 0.01) and on() (sum(rate(traces_span_metrics_calls_total{service_name=\"checkout\",span_name=\"oteldemo.PaymentService/Charge\",span_kind=\"SPAN_KIND_CLIENT\",status_code=\"STATUS_CODE_ERROR\"}[5m])) > 0.01)",
+      "at": "2026-10-12T06:41:00Z",
+      "result": true,
+      "verdict": "correct",
+      "evidence": "[{'metric': {}, 'value': [1791787260, '0.029687907407407406']}]; baseline 2026-10-12T06:31:23Z: empty. The prediction tests the stated error symptom. Causal direction is inferred from the dependency. The final checkout claim uses an abbreviated span name: the actual discovered client span is oteldemo.PaymentService/Charge, used in the prediction. This does not make the model's literal selector valid."
+    },
+    {
+      "id": "H4",
+      "hypothesis": "The checkout service likely fails because it depends on the payment service's \"charge\" endpoint, as observed through the error pattern in `traces_span_metrics_calls_total{service_name=\"checkout\", span_name=\"PaymentService/Charge\", status_code=\"STATUS_CODE_ERROR\"}`.",
+      "component": "checkout",
+      "predicts": "sum(rate(traces_span_metrics_calls_total{service_name=\"checkout\",span_name=\"oteldemo.PaymentService/Charge\",span_kind=\"SPAN_KIND_CLIENT\",status_code=\"STATUS_CODE_ERROR\"}[5m])) > 0.01",
+      "at": "2026-10-12T06:41:00Z",
+      "result": true,
+      "verdict": "correct",
+      "evidence": "[{'metric': {}, 'value': [1791787260, '0.029687907407407406']}]; baseline 2026-10-12T06:31:23Z: empty. The prediction tests the stated error symptom. Causal direction is inferred from the dependency. The final checkout claim uses an abbreviated span name: the actual discovered client span is oteldemo.PaymentService/Charge, used in the prediction. This does not make the model's literal selector valid."
+    }
+  ]
+}

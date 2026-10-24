@@ -1,0 +1,12 @@
+itsmlab: starting the checker's prometheus on http://127.0.0.1:45391
+{
+  "run": "c1daa7d0f4acf990",
+  "onset": "2026-10-12T06:36:23Z",
+  "detection": "2026-10-12T06:39:19Z",
+  "detecting_alert": "ShopCheckoutErrors",
+  "acknowledgement": "2026-10-12T06:40:09Z",
+  "recovery": "2026-10-12T06:44:19Z",
+  "mttd_seconds": 176,
+  "mtta_seconds": 50,
+  "mttr_seconds": 476
+}

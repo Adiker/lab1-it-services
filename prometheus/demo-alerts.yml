@@ -1,0 +1,38 @@
+# ai-generated: 100% - Codex wrote user-symptom alerts using five-minute SERVER span metrics in milliseconds.
+groups:
+  - name: shop-symptoms
+    rules:
+      - alert: CheckoutErrorRate
+        expr: |
+          sum(rate(traces_span_metrics_calls_total{service_name="checkout", span_kind="SPAN_KIND_SERVER", status_code="STATUS_CODE_ERROR"}[5m]))
+          / sum(rate(traces_span_metrics_calls_total{service_name="checkout", span_kind="SPAN_KIND_SERVER"}[5m])) > 0.05
+        for: 1m
+        labels:
+          service: checkout
+          severity: P1
+          system: shop
+        annotations:
+          summary: More than 5 percent of checkout server requests fail
+          description: Inspect payment and catalog dependencies, then compare recent feature changes.
+      - alert: CheckoutLatency
+        expr: |
+          histogram_quantile(0.99, sum by (le) (rate(traces_span_metrics_duration_milliseconds_bucket{service_name="checkout", span_kind="SPAN_KIND_SERVER"}[5m]))) > 2000
+        for: 1m
+        labels:
+          service: checkout
+          severity: P1
+          system: shop
+        annotations:
+          summary: Checkout server p99 exceeds two seconds
+          description: Check shipping and catalog latency even when checkout has no errors.
+      - alert: ShopServiceErrors
+        expr: |
+          sum by (service_name) (rate(traces_span_metrics_calls_total{service_name=~"payment|product-catalog|ad", span_kind="SPAN_KIND_SERVER", status_code="STATUS_CODE_ERROR"}[5m]))
+          / sum by (service_name) (rate(traces_span_metrics_calls_total{service_name=~"payment|product-catalog|ad", span_kind="SPAN_KIND_SERVER"}[5m])) > 0.05
+        for: 2m
+        labels:
+          service: shop
+          severity: P2
+          system: shop
+        annotations:
+          summary: A shop dependency has more than 5 percent server errors

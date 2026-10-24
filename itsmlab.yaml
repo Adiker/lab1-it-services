@@ -1,8 +1,8 @@
 # itsmlab.yaml - read by the checker (itsmlab) and by the wrappers itsmlab.sh / itsmlab.ps1.
-lab: 3                                   # the lab this repository is currently submitting
+lab: 4                                   # current laboratory; no submission receipt requested
 login: adiker
-baselines: {}                            # from Lab 2 on: per earlier lab, "student" or "checkpoint"
-repository: "Adiker/lab1-it-services"    # public GitHub repository used for Lab 1 receipts
+baselines: {lab3: student}               # retain the implemented Lab 3 baseline
+repository: "Adiker/lab1-it-services"    # own public GitHub repository
 submissions_repo: swasik/itsm-2026-submissions
 checker_image: ghcr.io/swasik/itsmlab:2026  # the course tag: leave it; a checker update is `docker pull` of this tag
                                             # (the grader alone pins a digest and records it in every grade)

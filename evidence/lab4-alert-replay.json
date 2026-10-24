@@ -1,0 +1,53 @@
+{
+  "CheckoutErrorRate": {
+    "baseline": {
+      "resultType": "matrix",
+      "result": []
+    },
+    "at": "2026-10-12T06:41:00Z",
+    "incident": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1791787260,
+            "0.26267546890153554"
+          ]
+        }
+      ]
+    }
+  },
+  "CheckoutLatency": {
+    "baseline": {
+      "resultType": "matrix",
+      "result": []
+    },
+    "at": "2026-10-12T06:41:00Z",
+    "incident": {
+      "resultType": "vector",
+      "result": []
+    }
+  },
+  "ShopServiceErrors": {
+    "baseline": {
+      "resultType": "matrix",
+      "result": []
+    },
+    "at": "2026-10-12T06:41:00Z",
+    "incident": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {
+            "service_name": "payment"
+          },
+          "value": [
+            1791787260,
+            "0.26267546890153554"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "server_rates": {
+    "query": "sum by (service_name,status_code) (rate(traces_span_metrics_calls_total{span_kind=\"SPAN_KIND_SERVER\"}[5m]))",
+    "at": "2026-10-24T15:35:05.031220+00:00",
+    "response": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "service_name": "image-provider",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "3.0125125521356337"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "ad",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "0.3833349305622107"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "currency",
+              "status_code": "STATUS_CODE_OK"
+            },
+            "value": [
+              1792856105.031,
+              "0.72083633681807"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "recommendation",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "0.5583356597319156"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "checkout",
+              "status_code": "STATUS_CODE_ERROR"
+            },
+            "value": [
+              1792856105.031,
+              "0.004166684027850116"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "frontend",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "31.741798924162183"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "frontend",
+              "status_code": "STATUS_CODE_ERROR"
+            },
+            "value": [
+              1792856105.031,
+              "0"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "frontend-proxy",
+              "status_code": "STATUS_CODE_ERROR"
+            },
+            "value": [
+              1792856105.031,
+              "0"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "frontend-proxy",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "21.22925512189634"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "agent",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "0.07083362847345197"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "product-catalog",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "3.6375151563131514"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "cart",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "1.0166709027954282"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "quote",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "0.1291672048633536"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "shipping",
+              "status_code": "STATUS_CODE_ERROR"
+            },
+            "value": [
+              1792856105.031,
+              "0"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "shipping",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "0.16666736111400463"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "flagd",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "6.454193559139829"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "checkout",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "0.033333472222800926"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "email",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "0.033333472222800926"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "payment",
+              "status_code": "STATUS_CODE_UNSET"
+            },
+            "value": [
+              1792856105.031,
+              "0.033333472222800926"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "payment",
+              "status_code": "STATUS_CODE_ERROR"
+            },
+            "value": [
+              1792856105.031,
+              "0.0033970000000000003"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "server_p99_milliseconds": {
+    "query": "histogram_quantile(0.99,sum by (service_name,le) (rate(traces_span_metrics_duration_milliseconds_bucket{span_kind=\"SPAN_KIND_SERVER\"}[5m])))",
+    "at": "2026-10-24T15:35:05.031220+00:00",
+    "response": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "service_name": "recommendation"
+            },
+            "value": [
+              1792856105.031,
+              "5.773333333333342"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "frontend"
+            },
+            "value": [
+              1792856105.031,
+              "40.108074860634986"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "agent"
+            },
+            "value": [
+              1792856105.031,
+              "198.3"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "flagd"
+            },
+            "value": [
+              1792856105.031,
+              "6127.500000000004"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "image-provider"
+            },
+            "value": [
+              1792856105.031,
+              "1.98"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "frontend-proxy"
+            },
+            "value": [
+              1792856105.031,
+              "48.26249999999987"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "shipping"
+            },
+            "value": [
+              1792856105.031,
+              "80.00000000000013"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "currency"
+            },
+            "value": [
+              1792856105.031,
+              "1.9799999999999998"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "product-catalog"
+            },
+            "value": [
+              1792856105.031,
+              "37.06666666666674"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "cart"
+            },
+            "value": [
+              1792856105.031,
+              "1.98"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "quote"
+            },
+            "value": [
+              1792856105.031,
+              "1.98"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "email"
+            },
+            "value": [
+              1792856105.031,
+              "5.792064667888285"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "ad"
+            },
+            "value": [
+              1792856105.031,
+              "3.6933333333333325"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "checkout"
+            },
+            "value": [
+              1792856105.031,
+              "95.49999999999997"
+            ]
+          },
+          {
+            "metric": {
+              "service_name": "payment"
+            },
+            "value": [
+              1792856105.031,
+              "1.98"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "memory": {
+    "query": "container_memory_usage_total_bytes{container_name=~\"email|recommendation|frontend|payment\"}",
+    "at": "2026-10-24T15:35:05.031220+00:00",
+    "response": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": []
+      }
+    }
+  }
+}

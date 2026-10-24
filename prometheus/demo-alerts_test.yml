@@ -1,0 +1,62 @@
+# ai-generated: 100% - Codex added baseline-noise, checkout-error and latency-only rule scenarios.
+rule_files: [demo-alerts.yml]
+evaluation_interval: 1m
+tests:
+  - name: Healthy server calls and noisy load-generator clients never alert
+    interval: 1m
+    input_series:
+      - series: 'traces_span_metrics_calls_total{service_name="checkout",span_kind="SPAN_KIND_SERVER",status_code="STATUS_CODE_UNSET"}'
+        values: '0+60x15'
+      - series: 'traces_span_metrics_calls_total{service_name="load-generator",span_kind="SPAN_KIND_CLIENT",status_code="STATUS_CODE_ERROR"}'
+        values: '0+600x15'
+      - series: 'traces_span_metrics_duration_milliseconds_bucket{service_name="checkout",span_kind="SPAN_KIND_SERVER",le="1000"}'
+        values: '0+60x15'
+      - series: 'traces_span_metrics_duration_milliseconds_bucket{service_name="checkout",span_kind="SPAN_KIND_SERVER",le="+Inf"}'
+        values: '0+60x15'
+    alert_rule_test:
+      - eval_time: 10m
+        alertname: CheckoutErrorRate
+        exp_alerts: []
+      - eval_time: 10m
+        alertname: CheckoutLatency
+        exp_alerts: []
+      - eval_time: 10m
+        alertname: ShopServiceErrors
+        exp_alerts: []
+  - name: Failed checkout orders page after the hold time
+    interval: 1m
+    input_series:
+      - series: 'traces_span_metrics_calls_total{service_name="checkout",span_kind="SPAN_KIND_SERVER",status_code="STATUS_CODE_UNSET"}'
+        values: '0+48x15'
+      - series: 'traces_span_metrics_calls_total{service_name="checkout",span_kind="SPAN_KIND_SERVER",status_code="STATUS_CODE_ERROR"}'
+        values: '0+12x15'
+    alert_rule_test:
+      - eval_time: 7m
+        alertname: CheckoutErrorRate
+        exp_alerts:
+          - exp_labels: {service: checkout, severity: P1, system: shop}
+            exp_annotations:
+              summary: More than 5 percent of checkout server requests fail
+              description: Inspect payment and catalog dependencies, then compare recent feature changes.
+  - name: Latency-only checkout failures page even with no error series
+    interval: 1m
+    input_series:
+      - series: 'traces_span_metrics_calls_total{service_name="checkout",span_kind="SPAN_KIND_SERVER",status_code="STATUS_CODE_UNSET"}'
+        values: '0+60x15'
+      - series: 'traces_span_metrics_duration_milliseconds_bucket{service_name="checkout",span_kind="SPAN_KIND_SERVER",le="1000"}'
+        values: '0+0x15'
+      - series: 'traces_span_metrics_duration_milliseconds_bucket{service_name="checkout",span_kind="SPAN_KIND_SERVER",le="5000"}'
+        values: '0+60x15'
+      - series: 'traces_span_metrics_duration_milliseconds_bucket{service_name="checkout",span_kind="SPAN_KIND_SERVER",le="+Inf"}'
+        values: '0+60x15'
+    alert_rule_test:
+      - eval_time: 7m
+        alertname: CheckoutErrorRate
+        exp_alerts: []
+      - eval_time: 7m
+        alertname: CheckoutLatency
+        exp_alerts:
+          - exp_labels: {service: checkout, severity: P1, system: shop}
+            exp_annotations:
+              summary: Checkout server p99 exceeds two seconds
+              description: Check shipping and catalog latency even when checkout has no errors.

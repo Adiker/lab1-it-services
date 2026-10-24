@@ -1,0 +1,219 @@
+{
+  "provider": "",
+  "errors": null,
+  "status": "ProblemDetected",
+  "problems": 14,
+  "results": [
+    {
+      "kind": "Deployment",
+      "name": "default/shipping",
+      "error": [
+        {
+          "Text": "Deployment default/shipping has 1 replicas but 0 are available with status running",
+          "KubernetesDoc": "",
+          "Sensitive": [
+            {
+              "Unmasked": "default",
+              "Masked": "TFVaNUhrZw=="
+            },
+            {
+              "Unmasked": "shipping",
+              "Masked": "WThfIj48IXY="
+            }
+          ]
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "Deployment",
+      "name": "default/flagd",
+      "error": [
+        {
+          "Text": "Deployment default/flagd has 1 replicas but 0 are available with status running",
+          "KubernetesDoc": "",
+          "Sensitive": [
+            {
+              "Unmasked": "default",
+              "Masked": "Q1QqaCptZQ=="
+            },
+            {
+              "Unmasked": "flagd",
+              "Masked": "JGt6M3k="
+            }
+          ]
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "Deployment",
+      "name": "default/grafana",
+      "error": [
+        {
+          "Text": "Deployment default/grafana has 1 replicas but 0 are available with status running",
+          "KubernetesDoc": "",
+          "Sensitive": [
+            {
+              "Unmasked": "default",
+              "Masked": "dmp5NVFnVA=="
+            },
+            {
+              "Unmasked": "grafana",
+              "Masked": "XmpjR0YsVA=="
+            }
+          ]
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "ConfigMap",
+      "name": "default/grafana-alerting",
+      "error": [
+        {
+          "Text": "ConfigMap grafana-alerting is not used by any pods in the namespace",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        },
+        {
+          "Text": "ConfigMap grafana-alerting is empty",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "ConfigMap",
+      "name": "kube-public/cluster-info",
+      "error": [
+        {
+          "Text": "ConfigMap cluster-info is not used by any pods in the namespace",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "ConfigMap",
+      "name": "kube-system/extension-apiserver-authentication",
+      "error": [
+        {
+          "Text": "ConfigMap extension-apiserver-authentication is not used by any pods in the namespace",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "ConfigMap",
+      "name": "kube-system/kube-apiserver-legacy-service-account-token-tracking",
+      "error": [
+        {
+          "Text": "ConfigMap kube-apiserver-legacy-service-account-token-tracking is not used by any pods in the namespace",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "ConfigMap",
+      "name": "kube-system/kubeadm-config",
+      "error": [
+        {
+          "Text": "ConfigMap kubeadm-config is not used by any pods in the namespace",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "ConfigMap",
+      "name": "kube-system/kubelet-config",
+      "error": [
+        {
+          "Text": "ConfigMap kubelet-config is not used by any pods in the namespace",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "Service",
+      "name": "default/flagd",
+      "error": [
+        {
+          "Text": "Service has not ready endpoints, pods: [Pod/flagd-857cf4d6d6-fbb8j], expected 1",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "Service",
+      "name": "default/grafana",
+      "error": [
+        {
+          "Text": "Service has no endpoints, expected label app.kubernetes.io/instance=demo",
+          "KubernetesDoc": "",
+          "Sensitive": [
+            {
+              "Unmasked": "app.kubernetes.io/instance",
+              "Masked": "fDlncSFzOkVmWkx6Zl4kIkZabWstIzNUeTo="
+            },
+            {
+              "Unmasked": "demo",
+              "Masked": "Z2N8VQ=="
+            }
+          ]
+        },
+        {
+          "Text": "Service has no endpoints, expected label app.kubernetes.io/name=grafana",
+          "KubernetesDoc": "",
+          "Sensitive": [
+            {
+              "Unmasked": "app.kubernetes.io/name",
+              "Masked": "XlRWMkx3VF0zX01URXNEQ2ZVMnVZVw=="
+            },
+            {
+              "Unmasked": "grafana",
+              "Masked": "fWclXSlpTg=="
+            }
+          ]
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    },
+    {
+      "kind": "Service",
+      "name": "default/shipping",
+      "error": [
+        {
+          "Text": "Service has not ready endpoints, pods: [Pod/shipping-6cd458879-7hsh2], expected 1",
+          "KubernetesDoc": "",
+          "Sensitive": []
+        }
+      ],
+      "details": "",
+      "parentObject": ""
+    }
+  ]
+}
