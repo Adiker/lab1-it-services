@@ -1,5 +1,5 @@
 # itsmlab.yaml - read by the checker (itsmlab) and by the wrappers itsmlab.sh / itsmlab.ps1.
-lab: 4                                   # current laboratory; no submission receipt requested
+lab: 5                                   # current laboratory; no submission receipt requested
 login: adiker
 baselines: {lab3: student}               # retain the implemented Lab 3 baseline
 repository: "Adiker/lab1-it-services"    # own public GitHub repository

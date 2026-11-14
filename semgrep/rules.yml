@@ -1,0 +1,12 @@
+# ai-generated: 100% - Codex wrote review rules for this service and their tests.
+rules:
+  - id: dynamic-sql-execute
+    languages: [python]
+    severity: WARNING
+    message: Review dynamically constructed SQL and ensure identifiers are trusted and values parameterized.
+    pattern: $DB.execute(f"...", ...)
+  - id: parsed-iso-datetime
+    languages: [python]
+    severity: WARNING
+    message: Review ISO datetime parsing for input validation and timezone handling.
+    pattern: datetime.fromisoformat(...)
