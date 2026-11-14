@@ -1,12 +1,12 @@
 ---
 lab5_triage:
   image: ghcr.io/adiker/lab1-it-services@sha256:31aac0e0b51fb5482a2d5b56e44ed575f698aa3b097da4b03375c093c9b6ed42
-  sarif_receipt: 0
+  sarif_receipt: 396
 ---
-<!-- ai-generated: 100% - Codex reviewed scanner results and recorded the decisions; the canary receipt and analysis remain pending. -->
+<!-- ai-generated: 100% - Codex reviewed scanner results and analyzed the receipted canary matrix. -->
 # Triage
 
-The image uses a pinned Python base, updates OS packages and removes pip after installation. The 2026-11-14 main run reported no dependency findings in Trivy, Grype or OSV-Scanner and no gitleaks findings. The image gate passed. Both the provenance and SBOM attestations for the digest above were verified with `gh attestation verify`. The receipt number is zero until an issue is explicitly authorized and receipted.
+The image uses a pinned Python base, updates OS packages and removes pip after installation. The 2026-11-14 main run reported no dependency findings in Trivy, Grype or OSV-Scanner and no gitleaks findings. The image gate passed. Both the provenance and SBOM attestations for the digest above were verified with `gh attestation verify`. The SARIF receipt is issue #396.
 
 | Tool | Rule | Decision | Reason |
 |---|---|---|---|
@@ -20,6 +20,6 @@ The image uses a pinned Python base, updates OS packages and removes pip after i
 
 ## Bake-off
 
-The published practice set gives the expected matrix, but its numbers are not the results for the assigned canary. The canary's SARIF and withheld labels are needed before comparing the detectors or choosing gates for that set. Seeded defects make measured recall optimistic relative to real-world defects. This section will be completed once the course has receipted the SARIF and revealed the labels.
+The receipted canary has 10 labelled defects. Gitleaks found 1, with 0 false positives and 9 misses (precision 1.0, recall 0.1, F1 0.1818). Grype and OSV-Scanner each found 2, with 0 false positives and 8 misses (precision 1.0, recall 0.2, F1 0.3333). Trivy found 3, with 0 false positives and 7 misses (precision 1.0, recall 0.3, F1 0.4615). Semgrep found 5, with 1 false positive and 5 misses (precision 0.8333, recall 0.5, F1 0.625).
 
-For the published practice set, Semgrep found 5 of 9 defects with 2 false positives (precision 0.7143, recall 0.5556); Trivy found 3 without false positives (precision 1.0, recall 0.3333). Gitleaks, Grype and OSV-Scanner each found 2 without false positives (precision 1.0, recall 0.2222). These are practice figures only, not measurements of the assigned canary. I would start with dependency and secret gates because their findings can be reviewed and fixed before merging, while keeping Semgrep as a reviewed report until its false positives are understood. A zero false-positive count in this small seeded set does not establish that a production gate will be noise-free. The canary data is still needed to support a decision about that specific set.
+I would keep the dependency and secret gates: they detect concrete issues that can be fixed before merging, and their canary findings have no false positives in this small sample. Their low recall makes them complementary rather than sufficient. I would initially keep Semgrep reporting for review: its wider coverage is useful, but its one false positive demonstrates a cost to an unconditional gate. In particular the access-control defect and two embedded secrets were missed by every scanner. The access-control failure requires reasoning about authorization, while the secrets illustrate the limits of pattern matching on arbitrary credentials; human review and targeted tests remain necessary. A high precision on ten seeded defects is not proof of a low false-positive rate in production, and seeded defects can make recall higher than it would be on real changes.
